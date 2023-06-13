@@ -1,0 +1,586 @@
+auswendig lernen folien: 
+
+34
+37
+38
+118
+119
+144
+146
+153
+164
+189
+203
+226
+230
+
+----------------------------
+#########################################
+#					#
+# 		CHAPTER 1		#
+#					#
+#########################################
+
+password = input("I am your bank. Password please: ")
+print("Hello there!")
+
+from datetime import datetime
+answer = input("Your birthday (DD-MM-YYYY): ")
+birthday = datetime.strptime(answer, "%d-%m-%Y")
+print("Your birthday was on a " + birthday.strftime("%A") + "!")
+someday = datetime.strptime("14-03-2018", "%d-%m-%Y")
+print("You are " + str((someday - birthday).days) + " days old!")
+
+from dateutil.relativedelta import relativedelta
+delta = relativedelta(someday, birthday)
+print(f"That’s {delta.years} years, {delta.months} months "
+      f"and {delta.days} days!!")
+
+stocks = ["Google", "Amazon", "Facebook", "Apple"] # Lists
+stocks[1]
+stocks.append("Twitter")
+stocks.insert(2, "Microsoft")
+stocks.sort()
+finals.remove(2.7)
+## ['Google', 'Amazon', 'Facebook', 'Apple']
+## Amazon
+## ['Google', 'Amazon', 'Facebook', 'Apple', 'Twitter']
+## ['Google', 'Amazon', 'Microsoft', 'Facebook', 'Apple', 'Twitter']
+## ['Amazon', 'Apple', 'Facebook', 'Google', 'Microsoft', 'Twitter']
+
+lottery = (1, 8, 9, 12, 24, 28) # Tuples
+len(lottery)
+lottery[1:3]
+lottery[:4]
+lottery[-1]
+lottery[-2:]
+## (1, 8, 9, 12, 24, 28)
+## 6
+## (8, 9)
+## (1, 8, 9, 12)
+## 28
+## (24, 28)
+
+x = 5
+5 >= x > 4
+## True; chaining works
+
+x = {"o", "n", "y", "t"}
+y = {"p", "h", "o", "n"}
+x & y
+x | y
+x - y
+
+bytes = 100000000 / 8
+# e.g. DSL 100000
+if bytes >= 1e9:
+    print(f"{bytes/1e9:6.2f} GByte")
+elif bytes >= 1e6:
+    print(f"{bytes/1e6:6.2f} MByte")
+elif bytes >= 1e3:
+    print(f"{bytes/1e3:6.2f} KByte")
+else:
+    print(f"{bytes:6.2f} Byte")
+
+if a > 1:
+    if b > 2:
+        pass # a special keyword for empty blocks
+
+powers = [2 ** i for i in range(11)]
+teacher = ["***", "**", "*"]
+grades = {star: len(teacher) - len(star) + 1 for star in teacher}
+
+import random
+n = 0
+favorite = 7
+while n < 100:
+    n += 1
+    draw = random.randint(1, 49) # e.g. German lottery
+    if draw == favorite:
+        print("Got my number! :)")
+        break
+else:
+    print("My favorite did not show up! :(")
+print(f"I tried {n} times!")
+
+def draw_sample(n, first=1, last=49):
+    numbers = list(range(first, last + 1))
+    sample = []
+    for i in range(n):
+        ind = random.randint(0, len(numbers) - 1)
+        sample.append(numbers.pop(ind))
+    sample.sort()
+    return sample
+
+draw_sample(6)
+draw_sample(6, 80, 100)
+draw_sample(3, first=5)
+
+# Functions are of type callable(), defined as closures
+
+def last_element(x):
+    y = x.copy()
+    return y.pop(-1)
+
+fastfood = [["burgers", "hot dogs"], ["pizza", "pasta"]]
+italian = fastfood.copy()
+italian.pop(0)
+american = list(fastfood)
+american.pop(1)
+american[0] = american[0].copy()
+fastfood[0][1] = "chicken wings"
+fastfood[1][0] = "risotto"
+italian
+american
+## [['risotto', 'pasta']]
+## [['burgers', 'hot dogs']]
+
+class Rectangle:
+    width = 0
+    height = 0
+    def area(self):
+        return self.width * self.height
+
+myrectangle = Rectangle()
+myrectangle.width = 10
+myrectangle.height = 20
+
+class Rectangle:
+    width = 0
+    height = 0
+    def __init__(self, width, height):
+	self.width = width
+	self.height = height
+	
+    def area(self):
+	return self.width * self.height
+
+myrectangle = Rectangle(15, 30)
+myrectangle.area()
+
+class Square(Rectangle):
+    def __init__(self, length):
+	super().__init__(length, length)
+
+    def diagonal(self):
+	return (self.width**2 + self.height**2)**0.5
+
+mysquare = Square(15)
+print(f"Area: {mysquare.area()}")
+print(f"Diagonal length: {mysquare.diagonal():7.4f}")
+
+class Dog:
+    def __del__(self):
+	print("Woof! The dogcatcher got me! Entering the void.. :(")
+
+########### Exceptions
+
+try:
+    print("Hello World")
+except:
+    print("This will be shown if there is an Exception")
+else:
+    print("This will be shown, only if there is no Exception")
+finally:
+    print("This will always be shown")
+
+
+class ValueTooLargeError(Exception):
+    """Raised when the input value is too large"""
+    pass
+x = 3
+try:
+    if x > 2:
+	raise ValueTooLargeError
+except ValueTooLargeError:
+    print("The number is too large.")
+
+
+def multiplier(x):
+    x = 4 * x
+    return x
+x = "OH"
+multiplier("AH")
+multiplier(x)
+x
+## OH
+## AHAHAHAH
+## OHOHOHOH
+## OH
+
+### closureS:
+
+def gen_multiplier(a):
+	def fun(x):
+return a * x
+return fun
+multi1 = gen_multiplier(4)
+multi2 = gen_multiplier(5)
+multi1
+multi1("EH")
+multi2("EH")
+
+import datetime
+import datetime as dt
+from datetime import date, timedelta
+from datetime import *
+
+
+#########################################
+#					#
+# 		CHAPTER 2		#
+#					#
+#########################################
+
+vec1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+vec2 = np.array(vec1)
+vec1 + vec1
+
+mat1 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+mat2 = np.array(mat1)
+np.dot(mat2, mat2)
+
+arr1 = [4, 8, 2]
+arr1 = np.array(arr1)
+arr2 = np.array([24.3, 0., 8.9, 4.4, 1.65, 45])
+arr3 = np.array([[4, 8, 5], [9, 3, 4], [1, 0, 6]])
+arr1.ndim
+
+np.zeros((4, 3))
+np.arange(6)
+np.identity(3)
+np.linspace(0, 80, 5)
+np.full((5, 4), 7)
+
+np.random.randint(10, size=(5, 4)) ## 0 bis inkl. 9
+np.random.rand(3, 3) ## 0 bis nicht ganz 1
+
+array.copy(): # Copies an array without reference (call-by-value). !!!!!!!!!
+
+arr1.dtype
+arr1 = (arr1 / 2.5).astype(np.int64)
+
+arr = np.arange(10)
+arr[:5:-1]   ## array([9, 8, 7, 6])
+
+column = arr3[:3, 1]
+column
+## array([8, 3, 0])
+column.base # save as below
+##array([[4,8,5],
+##	 [9,3,4],
+##	 [1,0,6]])
+elem = column[1:2]
+elem.base # same as above
+elem[0] = 3    ###### still an array vector länge 1
+arr3
+
+arr3_t = arr3.T
+arr3_t.flags.owndata ## False 
+
+arr3_r = arr3.reshape(1, 9)
+arr3_t.flags.owndata ## False
+
+arr3_v = arr3.view()
+arr3_v.flags.owndata ## False
+
+
+### Fancy indexing 
+arr3
+##array([[4,8,5],
+##	 [9,3,4],
+##	 [1,0,6]])
+
+arr = arr3[[0, 2], [0, 2]]
+arr
+## array([4, 6])
+
+### Advanced slicing
+arr = arr3[0:3:2, 0:3:2]
+## array([[4, 5],
+## 	  [1, 6]])
+
+bool_arr = (arr3 < 5)
+a = np.array([3, 8, 4, 1, 9, 5, 2])
+b = np.array([2, 3, 5, 6, 11, 15, 17])
+c = (a % 2 == 0) | (b % 3 == 0)
+d = (a > b) ^ (a % 2 == 1)
+
+y = arr3 % 2 == 0
+arr3[y]		  ## indexing with boolean arrays
+b[b % 2 == 0] = 5 ## conditional indexing
+arr = arr3.copy()
+arr[arr == 4] = 100
+
+row = mat[1] # get second row
+column = mat[:, 2] # get third column; notice we need to select "all rows"!!
+
+mat[[1, 2], [1, 2]] = 0 # works
+mat[[0, -1], [-1]] mat[[0, -1], [-1]]
+
+mat[:, 0] = np.array([3, 3, 3])
+mat[1:3, 1:3] = np.array([[0, 0], [0, 0]])
+
+arr = np.arange(15)
+arr.reshape((3, 5))
+
+## array([[ 0,  1,  2,  3,  4],
+##	  [ 5,  6,  7,  8,  9],
+##	  [10, 11, 12, 13, 14]])
+
+arr = np.arange(15)
+arr.resize((3, 7))
+arr
+
+## array([[ 0,  1,  2,  3,  4,  5,  6],
+	  [ 7,  8,  9, 10, 11, 12, 13], 
+	  [14,  0,  0,  0,  0,  0,  0]])
+	
+a = np.arange(5)
+a = np.append(a, 8)
+a = np.insert(a, 3, 77)
+
+a.resize((3, 3))
+np.delete(a, 1, axis=0)
+
+np.concatenate((a, np.arange(6).reshape(2, 3)), axis=0)
+
+## array([[ 0,  1,  2],
+##        [77,  3,  4],
+##        [ 8,  0,  0],
+##        [ 0,  1,  2],
+##	  [ 3,  4,  5]])
+
+np.split(np.arange(8), 4)
+## [array([0, 1]), array([2, 3]), array([4, 5]), array([6, 7])]
+
+np.eye(3).T
+res = np.dot(arr3, np.arange(18).reshape((3, 6)))
+res2 = arr3 @ np.arange(18).reshape((3, 6))
+np.allclose(res, res2) ## True
+
+## np.add, np.subtract, np.multiply, np.divide
+np.sqrt(arr3)
+np.exp(arr3)
+
+x = np.array([3, -6, 8, 4, 3, 5])
+y = np.array([3, 5, 7, 3, 5, 9])
+np.maximum(x, y)
+np.greater_equal(x, y)
+np.add(x, y)
+np.mod(x, y)
+
+p = np.arange(-5, 5, 0.01)
+x, y = np.meshgrid(p, p)
+x
+
+a = np.array([4, 7, 5, -7, 9, 0])
+b = np.array([-1,9, 8, 3, 3, 3])
+cond = np.array([True, True, False, True, False, False])
+res = np.where(cond, a, b)
+res
+
+arr3.mean() # mean of all array elements
+arr3.sum()
+arr3.argmin() ## 7 (achte element ist minimum)
+
+arr3.sum(axis=0) ## sum across all rows
+arr3.sum(axis=1) ## sum acoss the cols
+arr3.sort() ## default is axis=-1 ->sort along last axis (in this case cols) 
+
+linear algebra
+
+import numpy.linalg as nplin
+inv = nplin.inv(arr3)
+np.allclose(np.identity(3), np.dot(inv, arr3))
+nplin.det(arr3)
+np.trace(arr3)
+np.diag(arr3)
+eigenval, eigenvec = nplin.eig(A)
+
+eigenval * eigenvec
+np.dot(A, eigenvec)
+
+nplin.qr(array)
+Q, R = nplin.qr(arr3)
+
+np.allclose(arr3, np.dot(Q, R))
+
+x = nplin.solve(A,b)
+np.allclose(np.dot(A, x), b)
+
+#########################################
+#					#
+# 		CHAPTER 3		#
+#					#
+#########################################
+--------------------------
+Series (170-184):
+obj2 = pd.Series([2, -5, 9, 4], index=["a", "b", "c", "d"])
+obj4 = pd.Series(dictdata, index=cities)
+np.exp(obj2)["a":"c"]
+pd.isnull(obs4)
+pd.notnull(obs4)
+obj4.name = "population"
+obj4.index.name = "city"
+
+DataFrame (185):
+data = {"company": ["Daimler", "E.ON", "Siemens", "BASF", "BMW"],
+	"price": [69.2, 8.11, 110.92, 87.28, 87.81],
+	"volume": [4456290, 3667975, 3669487, 1778058, 1824582]}
+frame = pd.DataFrame(data)
+
+# adding data (may create NaNs)
+frame2 = pd.DataFrame(data, columns=["company", "volume","price", "change"]) 
+frame2["change"] = [1.2, -3.2, 0.4, -0.12, 2.4]
+frame2.change" = [1.2, -3.2, 0.4, -0.12, 2.4]
+
+# indexing DataFrames
+# selecting specific cols
+frame2[["company", "change"]] # beachte:! für mehrere columns, eine Liste an Strings, für einzelne reicht der String
+# selecting specific rows
+frame6 = pd.DataFrame(data, index=["a", "b", "c", "d", "e"])
+frame6["b":"d"]
+
+# naming properties
+frame2.index.name = "number:"
+frame2.columns.name = "feature:"
+
+# reindexing
+frame3 = frame.reindex([0, 2, 3, 4])
+frame4 = frame.reindex(index=[0, 2, 3, 4, 5], 
+		       fill_value=0,
+		       columns=["company", "price", "market cap"])
+
+frame4 = frame.reindex(index=[0, 2, 3, 4], 
+		       fill_value=np.nan,
+		       columns=["company", "price", "market cap"])
+
+# filling NaNs with values
+frame4.fillna(1000000, inplace=True)
+
+# dropping rows (Zeilen oder Spalten)
+frame5.drop([1, 2])
+frame5.drop(2, axis=0)
+
+# dropping cols
+frame5.drop("price", axis=1)[:3]
+del frame2["volume"]
+
+# selecting with loc and iloc
+frame6.loc["c", ["company", "price"]]
+frame6.iloc[2, [0, 1]]
+frame6.loc[["c", "d", "e"], ["volume", "price", "company"]]
+frame6.iloc[2:, ::-1]
+
+# hierarchical indexing
+ind = [["a", "a", "a", "b", "b"], [1, 2, 3, 1, 2]]
+frame6 = pd.DataFrame(np.arange(15).reshape((5, 3)), index=ind,
+		      frame6 = pd.DataFrame(np.arange(15).reshape((5, 3)), index=ind,
+		      columns=["first", "second", "third"])
+frame6.index.names = ["index1", "index2"]
+
+# Selecting of a multiindex
+frame6.loc["a"]
+frame6.loc["b", 1]
+
+frame7 = frame[["price", "volume"]]
+frame7.index = ["Daimler", "E.ON", "Siemens", "BASF", "BMW"]
+series = frame7.iloc[2]
+
+# Brodcast Siemens price and volume along the rows of frame7
+frame7 + series
+
+# Broadcast price along the cols of frame7
+series2 = frame7["price"]
+frame7.add(series2, axis=0)
+
+# numpy functions on DataFrames:
+frame7.apply(np.mean) # calc for each col
+frame7.apply(np.sqrt)[:2]
+
+# grouping DataFrames:
+res = vote.groupby(["Party", "Vote"]).count()
+
+-----------------------------------------------------------------------------------
+
+ex1.csv
+a, b, c, d, hello
+1, 2, 3, 4, world
+5, 6, 7, 8, python
+2, 3, 5, 7, pandas
+
+
+tab.txt
+a| b| c| d| hello
+1| 2| 3| 4| world
+5| 6| 7| 8| python
+2| 3| 5| 7| pandas
+
+----------------------------------------------------------------------------------
+
+# first row now becomes header
+df = pd.read_csv("data/ex1.csv")
+df = pd.read_table("data/tab.txt", sep="|")
+df = pd.read_csv("data/ex3.csv", skiprows=[1, 3])
+
+# adding a header
+df = pd.read_csv("data/ex2.csv", header=None) #(0 1 2 3 	4)
+df = pd.read_csv("data/ex2.csv",
+		 names=["a", "b", "c", "d", "hello"])
+df = pd.read_csv("data/ex2.csv",
+		 names=["a", "b", "c", "d", "hello"]),
+		 index_col="hello") # use hello column as index
+
+# writing file
+df = pd.read_csv("data/ex3.csv", skiprows=[1, 3])
+df.to_csv("out/out1.csv") # .csv file, the index and header is included (reason why ,1).
+df.to_csv("out/out2.csv", index=False, header=False)
+
+# header Zeile wird überschrieben
+df.to_csv("out/out3.csv", index=False,
+	  header=["a", "b", "c", "d", "e"])
+
+#########################################################################
+
+# Excel as DataFrame
+xls_frame = pd.read_excel("data/goog.xls")
+xls_frame[["Adj Close", "Volume", "High"]]
+
+data.DataReader("symbol", "source", "start", "end")
+ford = data.DataReader("F", "yahoo", "2020-01-01", "2020-01-31")
+ford.head()[["Close", "Volume"]]
+ford.index
+ford.loc["2020-01-28"]
+
+sap = data.DataReader("SAP", "yahoo", "2020-01-01", "2020-06-30")
+sap[25:27] # 2 rows
+sap.loc["2020-03-09"]
+
+population = data.DataReader("tps00001", "eurostat", "2010-01-01","2020-01-01")
+population.columns	# MultiIndex(levels=[[Population on 1 January - total], [Albania,...
+population["Population on 1 January - total", "France"][-5:]
+
+from bs4 import BeautifulSoup
+import requests
+url = "www.uni-goettingen.de/de/applied-econometrics/412565.html"
+r = requests.get("https://" + url)
+d = r.text
+soup = BeautifulSoup(d, "lxml")
+soup.title
+
+
+sap = data.DataReader("SAP", "yahoo", "2019-01-01", "2020-08-31")
+sap.index = pd.to_datetime(sap.index)
+boll = sap["Close"].rolling(window=20, center=False).mean()
+std = sap["Close"].rolling(window=20, center=False).std()
+upp = boll + std * 2
+low = boll - std * 2
+fig = plt.figure()
+ax = fig.add_subplot(1, 1, 1)
+boll.plot(ax=ax, label="20 days Rolling mean")
+upp.plot(ax=ax, label="Upper Band")
+low.plot(ax=ax, label="Lower Band")
+sap["Close"].plot(ax=ax, label="SAP Price")
+ax.legend(loc="best")
+fig.savefig("out/boll.pdf")
